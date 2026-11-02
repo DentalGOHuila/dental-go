@@ -1,0 +1,13 @@
+{
+  "name": "Dental GO",
+  "short_name": "Dental GO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F3F7F7",
+  "theme_color": "#0B7A83",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

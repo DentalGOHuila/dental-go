@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B7A83">
+<meta name="color-scheme" content="light dark">
+<title>Dental GO Tienda</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Concepto: vitrina limpia de consultorio. Texto primero, precio grande, un solo boton de compra. */
+:root{
+  --bg:#F3F7F7; --surface:#FFFFFF; --surface2:#E9F1F1; --ink:#10302F; --muted:#587372; --line:#D2E1E0;
+  --accent:#0B7A83; --accent-ink:#FFFFFF; --accent-soft:#D6EEF0; --wa:#128C4A; --wa-ink:#FFFFFF;
+  --good:#17724A; --good-bg:#DBF2E5; --warn:#7A5200; --warn-bg:#FFECBA; --bad:#A1261C; --bad-bg:#FBDBD7;
+  --font-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --font-body:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0C1A1A; --surface:#132525; --surface2:#1B3131; --ink:#E3F1F0; --muted:#98B4B2; --line:#2A4444;
+  --accent:#4CC3CC; --accent-ink:#06201F; --accent-soft:#16393B; --wa:#3DBE7B; --wa-ink:#06201F;
+  --good:#6FD6A1; --good-bg:#16382A; --warn:#F2C76A; --warn-bg:#3B2F10; --bad:#F59C94; --bad-bg:#40191A;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1A1A; --surface:#132525; --surface2:#1B3131; --ink:#E3F1F0; --muted:#98B4B2; --line:#2A4444;
+  --accent:#4CC3CC; --accent-ink:#06201F; --accent-soft:#16393B; --wa:#3DBE7B; --wa-ink:#06201F;
+  --good:#6FD6A1; --good-bg:#16382A; --warn:#F2C76A; --warn-bg:#3B2F10; --bad:#F59C94; --bad-bg:#40191A;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.45}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:var(--font-display);margin:0;font-weight:700;text-wrap:balance}
+button,input{font:inherit;color:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.hero{padding-block:28px 8px;display:flex;flex-direction:column;gap:6px}
+.hero h1{font-size:clamp(28px,6vw,40px);letter-spacing:-.02em}
+.hero p{margin:0;color:var(--muted);max-width:52ch}
+.tools{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);padding-block:10px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+input[type=search]{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-weight:600;cursor:pointer;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:12px;padding-block:16px 140px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.cat{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+.card h3{font-size:17px;overflow-wrap:anywhere}
+.desc{margin:0;color:var(--muted);font-size:14px;flex:1}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.price{font-family:var(--font-display);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700}
+.pill.low{background:var(--warn-bg);color:var(--warn)}.pill.out{background:var(--bad-bg);color:var(--bad)}
+.card.out{opacity:.65}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:8px 16px;font-weight:700;cursor:pointer;min-height:44px}
+.btn:disabled{background:var(--surface2);color:var(--muted);border-color:var(--line);cursor:default}
+.stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.stepper button{width:44px;height:44px;border:0;background:var(--surface2);font-size:20px;font-weight:700;cursor:pointer}
+.stepper output{min-width:36px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:48px 12px}
+.cart{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-top:10px;padding-bottom:max(10px,env(safe-area-inset-bottom,0px));box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+.cart[hidden]{display:none}
+.cart-in{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:8px}
+.cart-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.total{font-family:var(--font-display);font-size:22px;font-weight:700;font-variant-numeric:tabular-nums}
+.wa{display:inline-flex;align-items:center;justify-content:center;background:var(--wa);color:var(--wa-ink);border-radius:10px;padding:10px 18px;font-weight:700;text-decoration:none;min-height:44px}
+.wa[aria-disabled="true"]{background:var(--surface2);color:var(--muted);pointer-events:none}
+details summary{cursor:pointer;font-weight:600;color:var(--muted)}
+.items{display:flex;flex-direction:column;gap:6px;padding-top:6px;max-height:30vh;overflow:auto}
+.items div{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.small{font-size:12px;color:var(--muted);margin:0}
+footer.note{padding-block:0 24px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="hero"><h1 id="store"></h1><p>Insumos odontológicos para pacientes y profesionales. Arma tu pedido y envíalo por WhatsApp.</p></div>
+</div>
+<div class="tools"><div class="wrap" style="display:flex;flex-direction:column;gap:10px">
+  <label class="sr" for="q" style="position:absolute;left:-9999px">Buscar producto</label>
+  <input id="q" type="search" placeholder="Buscar producto" autocomplete="off">
+  <div class="chips" id="chips" role="group" aria-label="Categorías"></div>
+</div></div>
+<div class="wrap"><div class="grid" id="grid"></div>
+<footer class="note"><p class="small">Precios en pesos colombianos. Disponibilidad y precio final se confirman por WhatsApp.</p></footer></div>
+<div class="cart" id="cart" hidden><div class="cart-in">
+  <details><summary id="sum"></summary><div class="items" id="items"></div></details>
+  <div class="cart-row"><span class="total" id="total"></span><a class="wa" id="wa" target="_blank" rel="noopener">Pedir por WhatsApp</a></div>
+  <p class="small" id="wanote"></p>
+</div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script>
+(function(){
+'use strict';
+var DATA={store:'Dental GO',wa:'',intro:'',items:[]};
+var items=[],cart={},q='',cat='',loaded=false,failed=false,saved={};
+try{saved=JSON.parse(localStorage.getItem('dg-cart')||'{}')}catch(e){}
+var nf=new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+function fmt(n){return nf.format(Math.round(n||0)).replace(/ /g,' ')}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+function byId(id){return items.filter(function(i){return i.id===id})[0]}
+function head(){document.getElementById('store').textContent=DATA.store||'Dental GO';document.title=(DATA.store||'Dental GO')+' Tienda'}
+head();
+
+function chips(){
+  var cats=[];items.forEach(function(i){if(i.category&&cats.indexOf(i.category)<0)cats.push(i.category)});
+  var box=document.getElementById('chips');
+  if(cats.length<1){box.innerHTML='';return}
+  box.innerHTML=['Todo'].concat(cats).map(function(c){var v=c==='Todo'?'':c;return '<button class="chip" data-cat="'+esc(v)+'" aria-pressed="'+(cat===v)+'">'+esc(c)+'</button>'}).join('');
+}
+function grid(){
+  var g=document.getElementById('grid'),n=norm(q);
+  if(!loaded){g.innerHTML='<div class="empty"><p>Cargando catálogo…</p></div>';return}
+  if(!items.length){g.innerHTML='<div class="empty"><h2>Muy pronto</h2><p>'+(failed?'No pudimos cargar el catálogo. Intenta de nuevo en un momento.':'Estamos preparando el catálogo.')+'</p></div>';return}
+  var rows=items.filter(function(i){return (!cat||i.category===cat)&&(!n||norm(i.name+' '+i.desc+' '+i.category).indexOf(n)>=0)});
+  if(!rows.length){g.innerHTML='<div class="empty"><p>No encontramos productos con esa búsqueda.</p></div>';return}
+  g.innerHTML=rows.map(function(i){
+    var out=i.state==='out',inCart=cart[i.id]||0;
+    return '<article class="card'+(out?' out':'')+'">'+(i.category?'<span class="cat">'+esc(i.category)+'</span>':'')+'<h3>'+esc(i.name)+'</h3>'+(i.desc?'<p class="desc">'+esc(i.desc)+'</p>':'<p class="desc"></p>')+
+    '<div class="foot"><span class="price">'+fmt(i.price)+'</span>'+(i.state==='low'?'<span class="pill low">Pocas unidades</span>':out?'<span class="pill out">Agotado</span>':'')+'</div>'+
+    (out?'<button class="btn" disabled>No disponible</button>':inCart?'<div class="stepper" role="group" aria-label="Cantidad de '+esc(i.name)+'"><button data-dec="'+i.id+'" aria-label="Quitar uno">−</button><output>'+inCart+'</output><button data-inc="'+i.id+'" aria-label="Agregar uno">+</button></div>':'<button class="btn" data-add="'+i.id+'">Agregar</button>')+'</article>'}).join('');
+}
+function cartUi(){
+  var ids=Object.keys(cart).filter(function(k){return byId(k)}),total=0,count=0,lines=[];
+  ids.forEach(function(k){var i=byId(k),n=cart[k];total+=n*i.price;count+=n;lines.push('• '+n+' × '+i.name+' ('+fmt(n*i.price)+')')});
+  var box=document.getElementById('cart');box.hidden=!ids.length;
+  if(!ids.length)return;
+  document.getElementById('sum').textContent=count+(count===1?' producto':' productos')+' en tu pedido';
+  document.getElementById('items').innerHTML=ids.map(function(k){var i=byId(k);return '<div><span>'+cart[k]+' × '+esc(i.name)+'</span><span>'+fmt(cart[k]*i.price)+'</span></div>'}).join('');
+  document.getElementById('total').textContent=fmt(total);
+  var a=document.getElementById('wa'),wa=String(DATA.wa||'').replace(/\D/g,'');
+  var text=(DATA.intro||'Hola, quiero hacer este pedido:')+'\n\n'+lines.join('\n')+'\n\nTotal: '+fmt(total);
+  if(wa){a.href='https://wa.me/'+wa+'?text='+encodeURIComponent(text);a.removeAttribute('aria-disabled');document.getElementById('wanote').textContent='Se abre WhatsApp con tu pedido listo para enviar. Número de la tienda: +'+wa+'.'}
+  else{a.removeAttribute('href');a.setAttribute('aria-disabled','true');document.getElementById('wanote').textContent='La tienda aún no configuró su número de WhatsApp.'}
+  try{localStorage.setItem('dg-cart',JSON.stringify(cart))}catch(e){}
+}
+function all(){chips();grid();cartUi()}
+document.addEventListener('click',function(e){
+  var t=e.target.closest('button');if(!t)return;
+  if(t.dataset.cat!==undefined&&t.classList.contains('chip')){cat=t.dataset.cat;chips();grid();return}
+  var id=t.dataset.add||t.dataset.inc||t.dataset.dec;if(!id)return;
+  if(t.dataset.add)cart[id]=1;else if(t.dataset.inc)cart[id]=Math.min(99,(cart[id]||0)+1);else{cart[id]=(cart[id]||1)-1;if(cart[id]<1)delete cart[id]}
+  grid();cartUi();
+});
+document.getElementById('q').addEventListener('input',function(e){q=e.target.value;grid()});
+all();
+function apply(d){
+  DATA=d||DATA;items=(d&&d.items)||[];loaded=true;failed=false;head();
+  Object.keys(saved).forEach(function(k){if(!cart[k]&&byId(k)&&byId(k).state!=='out')cart[k]=Math.max(1,+saved[k]||1)});
+  Object.keys(cart).forEach(function(k){var i=byId(k);if(!i||i.state==='out')delete cart[k]});
+  saved={};all();
+}
+var cfg=window.FIREBASE_CONFIG;
+if(window.firebase&&cfg&&cfg.apiKey&&!/PEGAR/.test(cfg.apiKey)){
+  firebase.initializeApp(cfg);
+  firebase.firestore().doc('catalog/public').onSnapshot(function(s){apply(s.exists?s.data():null)},function(){loaded=true;failed=true;all()});
+}else{loaded=true;all()}
+})();
+</script>
+</body>
+</html>
